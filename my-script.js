@@ -5,11 +5,28 @@ class Calculator {
         this.displayExpression = document.querySelector('.expression');
         this.displayResult = document.querySelector('.result');
         this.setupEventListeners();
+        this.setupKeyboardInput();
     }
 
     setupEventListeners() {
         document.querySelectorAll('button').forEach(button => {
             button.addEventListener('click', () => this.handleInput(button.textContent));
+        });
+    }
+
+    setupKeyboardInput() {
+        document.addEventListener('keydown', (e) => {
+            const key = e.key;
+            if (/[\d\.\+\-\*\/\%]/.test(key) || key === 'Enter' || key === 'Backspace' || key === 'Escape') {
+                e.preventDefault();
+                let input = key;
+                if (key === 'Enter') input = '=';
+                else if (key === 'Escape') input = 'AC';
+                else if (key === '*') input = '×';
+                else if (key === '/') input = '÷';
+                else if (key === 'Backspace') input = 'DEL';
+                this.handleInput(input);
+            }
         });
     }
 
@@ -45,7 +62,7 @@ class Calculator {
         this.expression = this.expression.slice(0, -1);
         this.updateDisplay();
     }
-    
+
 appendInput(value) {
     // Replace display symbols with calculation symbols
     const calculationValue = value

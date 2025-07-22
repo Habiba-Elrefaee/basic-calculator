@@ -1,3 +1,33 @@
+:root[data-theme="light"] {
+    --background: #f5f0ff;
+    --calculator-bg: #fff;
+    --display-bg: #e6e0ff;
+    --text-primary: #333;
+    --text-secondary: #666;
+    --button-bg: #f8f6ff;
+    --button-hover: #efe9ff;
+    --operator-bg: #6b4de6;
+    --operator-hover: #5a3ed4;
+    --special-bg: #e0d6ff;
+    --special-text: #6b4de6;
+    --special-hover: #d1c4ff;
+}
+
+:root[data-theme="dark"] {
+    --background: #1a1a2e;
+    --calculator-bg: #262640;
+    --display-bg: #1a1a2e;
+    --text-primary: #fff;
+    --text-secondary: #a0a0a0;
+    --button-bg: #333355;
+    --button-hover: #444466;
+    --operator-bg: #6b4de6;
+    --operator-hover: #8265ff;
+    --special-bg: #4a4a6a;
+    --special-text: #e0d6ff;
+    --special-hover: #5a5a7a;
+}
+
 * {
     margin: 0;
     padding: 0;
@@ -10,7 +40,8 @@ body {
     justify-content: center;
     align-items: center;
     min-height: 100vh;
-    background-color: #f5f0ff;
+    background-color: var(--background);
+    transition: background-color 0.3s ease;
 }
 
 .calculator {
@@ -18,29 +49,31 @@ body {
     max-width: 400px;
     padding: 20px;
     border-radius: 30px;
-    background: #fff;
+    background: var(--calculator-bg);
     box-shadow: 0 10px 30px rgba(0, 0, 0, 0.1);
     margin: 20px;
+    transition: background-color 0.3s ease, box-shadow 0.3s ease;
 }
 
 .display {
-    background: #e6e0ff;
+    background: var(--display-bg);
     padding: 30px 20px;
     border-radius: 20px;
     margin-bottom: 20px;
     text-align: right;
+    transition: background-color 0.3s ease;
 }
 
 .expression {
     font-size: 24px;
-    color: #666;
+    color: var(--text-secondary);
     margin-bottom: 10px;
     min-height: 30px;
 }
 
 .result {
     font-size: 40px;
-    color: #333;
+    color: var(--text-primary);
     font-weight: bold;
     min-height: 50px;
 }
@@ -63,32 +96,84 @@ button {
     font-size: 24px;
     border-radius: 15px;
     cursor: pointer;
-    background: #f8f6ff;
-    color: #333;
-    transition: all 0.3s ease;
+    background: var(--button-bg);
+    color: var(--text-primary);
+    transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+    position: relative;
+    overflow: hidden;
 }
 
 button:hover {
-    background: #efe9ff;
-    transform: scale(0.98);
+    background: var(--button-hover);
+    transform: scale(0.98) translateY(-2px);
+    box-shadow: 0 5px 15px rgba(0, 0, 0, 0.2);
+}
+
+button:active {
+    transform: scale(0.95) translateY(0);
+    box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
+}
+
+button::after {
+    content: '';
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    width: 100px;
+    height: 100px;
+    background-color: rgba(255, 255, 255, 0.2);
+    border-radius: 50%;
+    transform: translate(-50%, -50%) scale(0);
+    opacity: 0;
+    transition: transform 0.5s, opacity 0.3s;
+}
+
+button:active::after {
+    transform: translate(-50%, -50%) scale(1);
+    opacity: 1;
+    transition: 0s;
 }
 
 .operator {
-    background: #6b4de6;
+    background: var(--operator-bg);
     color: white;
 }
 
 .operator:hover {
-    background: #5a3ed4;
+    background: var(--operator-hover);
 }
 
 .special {
-    background: #e0d6ff;
-    color: #6b4de6;
+    background: var(--special-bg);
+    color: var(--special-text);
 }
 
 .special:hover {
-    background: #d1c4ff;
+    background: var(--special-hover);
+}
+
+.theme-toggle {
+    position: fixed;
+    top: 20px;
+    right: 20px;
+}
+
+#theme-switch {
+    width: 50px;
+    height: 50px;
+    border-radius: 50%;
+    background: var(--calculator-bg);
+    border: 2px solid var(--operator-bg);
+    cursor: pointer;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 24px;
+    transition: all 0.3s ease;
+}
+
+#theme-switch:hover {
+    transform: rotate(45deg);
 }
 
 @media (max-width: 400px) {

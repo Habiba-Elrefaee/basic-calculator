@@ -4,8 +4,10 @@ class Calculator {
         this.result = '';
         this.displayExpression = document.querySelector('.expression');
         this.displayResult = document.querySelector('.result');
+        this.buttonSound = document.getElementById('button-sound');
         this.setupEventListeners();
         this.setupKeyboardInput();
+        this.setupThemeToggle();
     }
 
     setupEventListeners() {
@@ -30,7 +32,38 @@ class Calculator {
         });
     }
 
+    setupThemeToggle() {
+        const themeSwitch = document.getElementById('theme-switch');
+        const htmlElement = document.documentElement;
+        
+        // Check for saved theme preference or use system preference
+        const savedTheme = localStorage.getItem('theme') || 
+            (window.matchMedia('(prefers-color-scheme: dark)').matches ? 'dark' : 'light');
+        
+        htmlElement.setAttribute('data-theme', savedTheme);
+        themeSwitch.querySelector('.theme-icon').textContent = savedTheme === 'dark' ? '☀️' : '🌙';
+
+        themeSwitch.addEventListener('click', () => {
+            const currentTheme = htmlElement.getAttribute('data-theme');
+            const newTheme = currentTheme === 'light' ? 'dark' : 'light';
+            
+            htmlElement.setAttribute('data-theme', newTheme);
+            localStorage.setItem('theme', newTheme);
+            themeSwitch.querySelector('.theme-icon').textContent = newTheme === 'dark' ? '☀️' : '🌙';
+            
+            this.playButtonSound();
+        });
+    }
+
+    playButtonSound() {
+        this.buttonSound.currentTime = 0;
+        this.buttonSound.play().catch(error => {
+            console.log('Audio playback failed:', error);
+        });
+    }
+
     handleInput(value) {
+        this.playButtonSound();
         switch(value) {
             case 'AC':
                 this.clear();

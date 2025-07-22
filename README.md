@@ -22,13 +22,15 @@ A modern, responsive calculator web application built with vanilla JavaScript.
 - Backspace: Delete last character
 - Decimal point (.): Type directly
 
-## Technical Details
+## Implementation Details
 
 - Built with vanilla JavaScript (no frameworks)
 - Uses CSS Grid and Flexbox for responsive layout
 - Implements secure expression evaluation without eval()
-- Supports both mouse/touch and keyboard input
+- Mobile-first design approach
 
-## Usage
+## Setup
 
-Simply open `index.html` in a modern web browser to start using the calculator.
+1. Clone the repository
+2. Open index.html in a modern web browser
+3. Start calculating!

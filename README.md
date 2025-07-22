@@ -12,6 +12,8 @@ A modern, responsive calculator web application built with vanilla JavaScript.
 - Error handling for invalid expressions
 - Clean, modern UI with a purple theme
 - Smooth animations and hover effects
+- Includes a light and dark mode switch for user preference.
+- Includes a mute sound feature to allow muting of button clicks.
 
 ## Keyboard Shortcuts
 

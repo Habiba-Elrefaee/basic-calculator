@@ -7,7 +7,7 @@
 
 body {
     display: flex;
-    justify-content: center; 
+    justify-content: center;
     align-items: center;
     min-height: 100vh;
     background-color: #f5f0ff;
@@ -43,4 +43,74 @@ body {
     color: #333;
     font-weight: bold;
     min-height: 50px;
+}
+
+.buttons {
+    display: grid;
+    gap: 15px;
+}
+
+.row {
+    display: grid;
+    grid-template-columns: repeat(4, 1fr);
+    gap: 15px;
+}
+
+button {
+    border: none;
+    outline: none;
+    padding: 20px;
+    font-size: 24px;
+    border-radius: 15px;
+    cursor: pointer;
+    background: #f8f6ff;
+    color: #333;
+    transition: all 0.3s ease;
+}
+
+button:hover {
+    background: #efe9ff;
+    transform: scale(0.98);
+}
+
+.operator {
+    background: #6b4de6;
+    color: white;
+}
+
+.operator:hover {
+    background: #5a3ed4;
+}
+
+.special {
+    background: #e0d6ff;
+    color: #6b4de6;
+}
+
+.special:hover {
+    background: #d1c4ff;
+}
+
+@media (max-width: 400px) {
+    .calculator {
+        margin: 10px;
+        padding: 15px;
+    }
+
+    button {
+        padding: 15px;
+        font-size: 20px;
+    }
+
+    .display {
+        padding: 20px 15px;
+    }
+
+    .expression {
+        font-size: 20px;
+    }
+
+    .result {
+        font-size: 32px;
+    }
 }

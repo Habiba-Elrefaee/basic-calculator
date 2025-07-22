@@ -7,9 +7,12 @@
     <link rel="stylesheet" href="styles.css">
 </head>
 <body>
-    <div class="theme-toggle">
-        <button id="theme-switch">
+    <div class="control-panel">
+        <button id="theme-switch" class="control-btn">
             <span class="theme-icon">🌙</span>
+        </button>
+        <button id="mute-switch" class="control-btn">
+            <span class="sound-icon">🔊</span>
         </button>
     </div>
     <div class="calculator">
@@ -20,7 +23,7 @@
         <div class="buttons">
             <div class="row">
                 <button class="special">AC</button>
-                <button class="special">()</button>
+                <button class="special" id="parentheses">(</button>
                 <button class="special">%</button>
                 <button class="operator">÷</button>
             </div>
@@ -51,7 +54,7 @@
         </div>
     </div>
     <audio id="button-sound" preload="auto">
-        <source src="mixkit-mouse-click-close-1113.wav" type="audio/mpeg">
+        <source src="mixkit-mouse-click-close-1113.wav" type="audio/wav">
     </audio>
     <script src="my-script.js"></script>
 </body>

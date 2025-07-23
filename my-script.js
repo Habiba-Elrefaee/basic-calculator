@@ -4,6 +4,7 @@ class Calculator {
         this.result = '';
         this.parenthesesCount = 0;
         this.isMuted = localStorage.getItem('isMuted') === 'true';
+        this.isNewCalculation = false;
         
         // Get DOM elements
         this.displayExpression = document.querySelector('.expression');
@@ -139,6 +140,13 @@ class Calculator {
         const isOperator = /[\+\-\*\/\%]/.test(calculationValue);
         const isNumber = /[\d\.]/.test(calculationValue);
 
+        // If starting new calculation after a result
+        if (this.isNewCalculation && isNumber) {
+            this.expression = '';
+            this.result = '';
+            this.isNewCalculation = false;
+        }
+
         if (isOperator && /[\+\-\*\/\%]$/.test(this.expression)) {
             this.expression = this.expression.slice(0, -1) + calculationValue;
         } else if (isNumber || (isOperator && this.expression !== '' && !/\($/.test(this.expression))) {
@@ -157,13 +165,19 @@ class Calculator {
                     this.parenthesesCount--;
                 }
                 
+                // Sanitize the expression to replace × and ÷ with * and /
+                // This is necessary to ensure the expression can be evaluated correctly
                 const sanitizedExpression = this.expression
                     .replace(/×/g, '*')
                     .replace(/÷/g, '/');
                 
+                // Create a new function from the sanitized expression and execute it
+                // This allows us to evaluate the mathematical expression safely
+                // The expression is wrapped in a function to avoid using eval directly
+                // This is a safer alternative to eval, as it only allows valid JavaScript expressions
                 const result = new Function('return ' + sanitizedExpression)();
                 this.result = Number.isInteger(result) ? result : parseFloat(result.toFixed(8));
-                this.expression = this.result.toString();
+                this.isNewCalculation = true;
                 this.parenthesesBtn.textContent = '(';
                 this.updateDisplay();
             }
@@ -178,6 +192,7 @@ class Calculator {
         this.expression = '';
         this.result = '';
         this.parenthesesCount = 0;
+        this.isNewCalculation = false;
         this.parenthesesBtn.textContent = '(';
         this.updateDisplay();
     }
@@ -194,12 +209,15 @@ class Calculator {
         } else {
             this.parenthesesBtn.textContent = ')';
         }
+        this.isNewCalculation = false;
         this.updateDisplay();
     }
 
     updateDisplay() {
         this.displayExpression.textContent = this.expression || '0';
-        this.displayResult.textContent = this.result || '';
+        // This line updates the result display with the current result.
+        // If the result is empty, it will show '0' by default.
+        this.displayResult.textContent = this.result;  // Remove || '0' to not show 0 in result display
     }
 }
 
